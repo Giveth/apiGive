@@ -1,5 +1,4 @@
 import { Log, LogStatus } from '../entities/log';
-import { Column, Index, ManyToOne, RelationId } from 'typeorm';
 import { AccessToken } from '../entities/accessToken';
 import { Application } from '../entities/application';
 
@@ -15,18 +14,18 @@ export const createNewLog = async (params: {
 export const updateScopeLog = async (data: {
   trackId: string;
   scope: string;
-}) => {
+}): Promise<void> => {
   const { trackId, scope } = data;
-  return Log.update({ trackId }, { scope });
+  await Log.update({ trackId }, { scope });
 };
 
 export const updateFailedLog = async (data: {
   trackId: string;
   error: string;
   statusCode: number;
-}) => {
+}): Promise<void> => {
   const { trackId, error, statusCode } = data;
-  return Log.update(
+  await Log.update(
     { trackId },
     { status: LogStatus.FAILED, error, statusCode },
   );
@@ -35,20 +34,20 @@ export const updateFailedLog = async (data: {
 export const updateSuccessLog = async (data: {
   trackId: string;
   result: string;
-  httpStatusCode: number;
-}) => {
-  const { trackId, result, httpStatusCode } = data;
-  return Log.update(
+  statusCode: number;
+}): Promise<void> => {
+  const { trackId, result, statusCode } = data;
+  await Log.update(
     { trackId },
-    { status: LogStatus.DONE, result, statusCode: httpStatusCode },
+    { status: LogStatus.DONE, result, statusCode },
   );
 };
 
-export const updateAccessTokenAndApplication = (data: {
+export const updateAccessTokenAndApplication = async (data: {
   trackId: string;
   accessToken: AccessToken;
   application: Application;
-}) => {
+}): Promise<void> => {
   const { trackId, application, accessToken } = data;
-  return Log.update({ trackId }, { application, accessToken });
+  await Log.update({ trackId }, { application, accessToken });
 };

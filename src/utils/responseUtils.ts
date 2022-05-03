@@ -13,7 +13,7 @@ export const sendStandardResponse = (
   updateSuccessLog({
     trackId,
     result: JSON.stringify(result),
-    httpStatusCode,
+    statusCode:httpStatusCode,
   });
   res.status(httpStatusCode).send(result);
 };

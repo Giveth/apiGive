@@ -1,11 +1,6 @@
 import express, { Request, Response } from 'express';
 import { authenticateThirdPartyBasicAuth } from '../../middlewares/authentication';
 import { TokenController } from '../../controllers/v1/tokenController';
-import { logger } from '../../utils/logger';
-import {
-  updateFailedLog,
-  updateSuccessLog,
-} from '../../repositories/logRepository';
 import { sendStandardResponse } from '../../utils/responseUtils';
 
 export const tokenRouter = express.Router();

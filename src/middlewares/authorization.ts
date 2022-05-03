@@ -17,7 +17,6 @@ export const getAccessScopeMiddleware = (params: { scope: string }) => {
       errorMessagesEnum.TOKEN_DOESNT_HAVE_ACCESS_TO_THIS_SCOPE,
     );
     error.message += scope;
-    updateFailedLog({ trackId, error: error.message });
     throw error;
   };
 };

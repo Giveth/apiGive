@@ -30,7 +30,7 @@ export class Log extends BaseEntity {
   @Column()
   status: string;
   @Column()
-  statusCode: number;
+  statusCode?: number;
   @Column()
   error?: string;
   @Column()
@@ -40,9 +40,9 @@ export class Log extends BaseEntity {
 
   @Index()
   @ManyToOne(_type => Application)
-  application: Application;
+  application?: Application;
   @RelationId((log: Log) => log.application)
-  applicationId: number;
+  applicationId?: number;
 
   @Index()
   @ManyToOne(_type => AccessToken)
