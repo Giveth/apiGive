@@ -3,7 +3,6 @@ import { CreateDonationRequest } from "../../types/requestResponses";
 import { GivethIoInterface } from "./givethIoInterface";
 import { createBasicAuthentication } from "../../utils/authorizationUtils";
 import axios from "axios";
-import exp from "constants";
 import { networkIds } from "../../utils/utils";
 import { logger } from "../../utils/logger";
 import { StandardError } from "../../types/StandardError";

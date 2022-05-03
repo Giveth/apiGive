@@ -26,7 +26,7 @@ export class AccessToken extends BaseEntity {
   isActive: boolean;
 
   @Index()
-  @ManyToOne(_type => Application)
+  @ManyToOne(() => Application)
   application: Application;
   @RelationId((accessToken: AccessToken) => accessToken.application)
   applicationId: number;
