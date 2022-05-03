@@ -37,7 +37,7 @@ API Give is a project that provide open API for third parties to can work with h
 * Run [Migrations](#Migrations) 
 * Creat a file named `development.env` based on [Env example file](./config/example.env) and put it in `./config`
 * `npm start`
-* Now you can see the swagger in http:localhost:3040/docs
+* Now you can browse [Swagger](http:localhost:3040/docs)
 
 ### Test
 You should have a postgress instance up in order to running tests so you can use  [Local DB docker-compose](./docker-compose-local-postgres-redis.ym)
@@ -48,9 +48,7 @@ You should have a postgress instance up in order to running tests so you can use
 In localhost and test we put logs in console and file but in production and staging we just use file for writing logs You can see logs beautifully with this command
 
 * `npm i -g bunyan`
-* `tail -f logs/impact-graph.log | bunyan`
-
-
+* `tail -f logs/apiGive.log | bunyan`
 
 ### Migrations
 
@@ -70,7 +68,7 @@ npm run db:migrate:run:local
 #### If you want to revert last migration
 
 ```
-db:migrate:revert:local
+npm run db:migrate:revert:local
 ```
 
 ### Architecture
