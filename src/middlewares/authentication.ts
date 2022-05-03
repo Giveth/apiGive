@@ -8,6 +8,7 @@ import {
 } from '../repositories/applicationRepository';
 import { StandardError } from '../types/StandardError';
 import { errorMessagesEnum } from '../utils/errorMessages';
+import { updateAccessTokenAndApplication } from '../repositories/logRepository';
 
 export const authenticateThirdPartyBasicAuth = async (
   req: Request,
@@ -46,7 +47,15 @@ export const authenticateJwtAccessToken = async (
     throw new StandardError(errorMessagesEnum.UNAUTHORIZED);
   }
   const application = await findApplicationById(accessToken.applicationId);
+  if (!application) {
+    throw new StandardError(errorMessagesEnum.UNAUTHORIZED);
+  }
   res.locals.accessToken = accessToken;
   res.locals.application = application;
+  updateAccessTokenAndApplication({
+    accessToken,
+    application,
+    trackId: res.locals.trackId,
+  });
   next();
 };

@@ -11,7 +11,6 @@ export type CreateDonationRequest = {
    */
   currency: string;
 
-
   /**
    * @example false
    */

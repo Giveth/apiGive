@@ -7,11 +7,14 @@ export class createLogTable1651305296248 implements MigrationInterface {
             CREATE TABLE IF NOT EXISTS public.log
               (
                   id integer NOT NULL,
-                  "serviceName" character varying COLLATE pg_catalog."default" NOT NULL,
+                  url character varying COLLATE pg_catalog."default" NOT NULL,
+                  scope character varying COLLATE pg_catalog."default",
+                  statusCode integer,
                   status character varying COLLATE pg_catalog."default" NOT NULL,
-                  error character varying COLLATE pg_catalog."default" NOT NULL,
+                  error character varying COLLATE pg_catalog."default" ,
                   "trackId" character varying COLLATE pg_catalog."default" NOT NULL,
-                  result character varying COLLATE pg_catalog."default" NOT NULL,
+                  result character varying COLLATE pg_catalog."default",
+                
                   "applicationId" integer,
                   "accessTokenId" integer,
                   CONSTRAINT "PK_350604cbdf991d5930d9e618fbd" PRIMARY KEY (id),

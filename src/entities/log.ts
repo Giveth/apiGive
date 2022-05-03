@@ -10,21 +10,33 @@ import {
 import { Application } from './application';
 import { AccessToken } from './accessToken';
 
+export const LogStatus = {
+  PENDING: 'pending',
+  DONE: 'done',
+  FAILED: 'failed',
+};
+
 @Entity()
 export class Log extends BaseEntity {
   @PrimaryGeneratedColumn()
   readonly id: number;
 
   @Column()
-  serviceName: string;
+  url: string;
+  @Column()
+  method: string;
+  @Column()
+  scope?: string;
   @Column()
   status: string;
   @Column()
-  error: string;
+  statusCode: number;
+  @Column()
+  error?: string;
   @Column()
   trackId: string;
   @Column()
-  result: string;
+  result?: string;
 
   @Index()
   @ManyToOne(_type => Application)
