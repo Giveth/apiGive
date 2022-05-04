@@ -22,6 +22,6 @@ services:
         target: /usr/src/app/config
       - type: bind
         source: ./logs
-        target: /usr/src/app/logs
+        target: /usr/src/app/dist/logs
     ports:
       - "3040:3040"
