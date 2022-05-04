@@ -7,6 +7,7 @@ COPY tsconfig.json .
 COPY tsoa.json .
 COPY package*.json ./
 COPY src ./src
+COPY migrations ./migrations
 COPY test ./test
 
 RUN npm ci
