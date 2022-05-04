@@ -16,6 +16,9 @@ services:
       # You should have a staging.env file in the config folder
       - type: bind
         source: ./config
+        target: /usr/src/app/dist/config
+      - type: bind
+        source: ./config
         target: /usr/src/app/config
       - type: bind
         source: ./logs
