@@ -27,6 +27,7 @@ describe('add log for failed requests,  test cases', () => {
         },
       );
     } catch (e:any) {
+      // because update log is fire and forget, I add await sleep to make sure log has been updated
       await sleep(1000)
       const newLog = await Log.findOne({where:{trackId:e.response.data.trackId}})
       assert.equal(e.response.data.httpStatusCode,newLog?.statusCode);
@@ -56,6 +57,7 @@ describe('add log for failed requests,  test cases', () => {
         },
       );
     } catch (e:any) {
+      // because update log is fire and forget, I add await sleep to make sure log has been updated
       await sleep(1000)
       const newLog = await Log.findOne({where:{trackId:e.response.data.trackId}})
       assert.equal(e.response.data.httpStatusCode,newLog?.statusCode);
@@ -96,6 +98,7 @@ describe('add log for failed requests,  test cases', () => {
         },
       );
     } catch (e:any) {
+      // because update log is fire and forget, I add await sleep to make sure log has been updated
       await sleep(1000)
       const newLog = await Log.findOne({where:{trackId:e.response.data.trackId}})
       assert.equal(e.response.status,newLog?.statusCode);
