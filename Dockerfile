@@ -13,5 +13,4 @@ RUN npm ci
 RUN npm i -g pm2
 RUN npm run build #It will run prebuild script for generating swagger spec by tsoa as well
 
-CMD pm2-runtime dist/index.js
-EXPOSE 3040
+CMD pm2-runtime dist/src/index.js
