@@ -25,6 +25,13 @@ export const authenticateThirdPartyBasicAuth = async (
       label: username,
       secret,
     });
+    if (!application) {
+      throw new StandardError(errorMessagesEnum.UNAUTHORIZED);
+    }
+    updateAccessTokenAndApplication({
+      application,
+      trackId: res.locals.trackId,
+    });
     res.locals.application = application;
     next();
   } catch (e) {

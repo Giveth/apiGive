@@ -10,8 +10,7 @@ export const addLog = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const requestSegments = req.url.split('/');
-  const url = requestSegments[requestSegments.length - 1];
+  const url = req.url;
   const trackId = `${new Date().getTime()}_${generateRandomString(6)}`;
   await createNewLog({
     url,

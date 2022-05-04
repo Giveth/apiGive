@@ -35,7 +35,7 @@ function postDonationsTestCases() {
       },
       {
         headers: {
-          authorization: `Bearer ${accessToken}`,
+          authorization: `Bearer ${accessToken.jwt}`,
         },
       },
     );

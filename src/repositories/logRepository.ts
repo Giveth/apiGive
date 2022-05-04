@@ -37,17 +37,20 @@ export const updateSuccessLog = async (data: {
   statusCode: number;
 }): Promise<void> => {
   const { trackId, result, statusCode } = data;
-  await Log.update(
-    { trackId },
-    { status: LogStatus.DONE, result, statusCode },
-  );
+  await Log.update({ trackId }, { status: LogStatus.DONE, result, statusCode });
 };
 
 export const updateAccessTokenAndApplication = async (data: {
   trackId: string;
-  accessToken: AccessToken;
+  accessToken?: AccessToken;
   application: Application;
 }): Promise<void> => {
   const { trackId, application, accessToken } = data;
-  await Log.update({ trackId }, { application, accessToken });
+
+  await Log.update({ trackId }, {
+    // applicationId: application.id,
+    // accessTokenId: accessToken.id,
+    application,
+    accessToken
+  });
 };

@@ -20,11 +20,12 @@ export const errorHandler: ErrorRequestHandler = async (
   const httpStatus =
     error instanceof StandardError ? (error.httpStatusCode as number) : 500;
   res.status(httpStatus);
-  const errorBody =
+  const errorBody: any =
     error instanceof StandardError
       ? error
       : new StandardError(errorMessagesEnum.INTERNAL_SERVER_ERROR);
 
+  errorBody.trackId = res.locals.trackId;
   updateFailedLog({
     trackId: res.locals.trackId,
     error: JSON.stringify(errorBody),
