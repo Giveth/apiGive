@@ -1,0 +1,427 @@
+import { IncomingMessage } from 'connect';
+import { redis } from '../../services/redis';
+import { Admin, AdminRole } from '../../entities/admin';
+const AdminJS = require('adminjs');
+// use redis for session data instead of in-memory storage
+// tslint:disable-next-line:no-var-requires
+const bcrypt = require('bcrypt');
+// tslint:disable-next-line:no-var-requires
+const session = require('express-session');
+// tslint:disable-next-line:no-var-requires
+const RedisStore = require('connect-redis')(session);
+// tslint:disable-next-line:no-var-requires
+const cookie = require('cookie');
+// tslint:disable-next-line:no-var-requires
+const cookieParser = require('cookie-parser');
+const secret = process.env.ADMIN_BRO_COOKIE_SECRET  || "test_secret";
+// tslint:disable-next-line:no-var-requires
+const AdminJSExpress = require('@adminjs/express');
+import { Database, Resource } from '@adminjs/typeorm';
+import { findAdminByEmail } from '../../repositories/adminRepository';
+import { logger } from '../../utils/logger';
+import { NextFunction } from 'express';
+import { Application } from '../../entities/application';
+import { Organization } from '../../entities/organization';
+import { debug } from 'util';
+
+const express = require('express');
+const app = express();
+// const { records } = context;
+// const rawQueryStrings = await redis.get(
+//   `adminbro_${context.currentAdmin.id}_qs`,
+// );
+// headers defined by the verification team for exporting
+const headers = [
+  'id',
+  'title',
+  'slug',
+  'admin',
+  'creationDate',
+  'updatedAt',
+  'impactLocation',
+  'walletAddress',
+  'statusId',
+  'qualityScore',
+  'verified',
+  'listed',
+  'totalDonations',
+  'totalProjectUpdates',
+  'website',
+];
+
+interface AdminBroContextInterface {
+  h: any;
+  resource: any;
+  records: any[];
+  currentAdmin: Admin;
+  payload?: any;
+}
+
+interface AdminBroRequestInterface {
+  payload?: any;
+  record?: any;
+  query?: {
+    recordIds?: string;
+  };
+}
+
+AdminJS.registerAdapter({ Database, Resource });
+// AdminJSExpress.buildRouter(adminJs, router)
+
+export const getAdminBroRouter = async () => {
+  return AdminJSExpress.buildAuthenticatedRouter(
+    await getAdminBroInstance(),
+    {
+      authenticate: async (email: string, password: string) => {
+        try {
+          const user = await findAdminByEmail(email);
+          logger.debug("useeer>>>>",user)
+          if (user) {
+            const matched = await bcrypt.compare(
+              password,
+              user.encryptedPassword,
+            );
+            if (matched) {
+              return user;
+            }
+          }
+          return false;
+        } catch (e) {
+          logger.error({ e });
+          return false;
+        }
+      },
+      cookiePassword: secret,
+    },
+    // custom router to save admin in req.session for express middlewares
+    null,
+    {
+      // default values that will be deprecated, need to define them manually
+      resave: false,
+      saveUninitialized: true,
+      rolling: false,
+      secret,
+      store: new RedisStore({
+        client: redis,
+      }),
+    },
+  );
+};
+
+
+
+
+
+const getAdminBroInstance = async () => {
+  return new AdminJS({
+    branding: {
+      logo: 'https://i.imgur.com/cGKo1Tk.png',
+      favicon:
+        'https://icoholder.com/media/cache/ico_logo_view_page/files/img/e15c430125a607a604a3aee82e65a8f7.png',
+      companyName: 'Giveth',
+      softwareBrothers: false,
+    },
+    resources: [
+      {
+        resource: Application,
+        options: {
+          properties: {
+            applicationId: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: false,
+                new: false,
+              },
+            },
+
+            label: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: true,
+                new: false,
+              },
+            },
+            isActive: {
+              isVisible: true,
+            },
+            name: {
+              isVisible: true,
+            },
+            secret: {
+              isVisible: true
+            },
+            scopes: {
+              isVisible: true,
+            },
+            logo: {
+              isVisible: true,
+            },
+            allowedRequestsPerHour: {
+              isVisible: true,
+            },
+            organization: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: false,
+                new: false,
+              },
+            }
+          },
+          actions: {
+            bulkDelete: {
+              isVisible: false,
+            },
+            edit: {
+              isVisible: true,
+            },
+            delete: {
+              isVisible: false,
+            }
+          },
+        },
+      },
+      {
+        resource: Organization,
+        options: {
+          properties: {
+            organizationId: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: false,
+                new: false,
+              },
+            },
+
+            name: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: true,
+                new: true,
+              },
+            },
+            isVerified: {
+              isVisible: true,
+            },
+            isActive: {
+              isVisible: true,
+            },
+            website: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: true,
+                new: true,
+              },
+            }
+          },
+          actions: {
+            bulkDelete: {
+              isVisible: false,
+            },
+            edit: {
+              isVisible: true,
+            },
+            delete: {
+              isVisible: false,
+            }
+          },
+        },
+      },
+      {
+        resource: Organization,
+        options: {
+          properties: {
+            organizationId: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: false,
+                new: false,
+              },
+            },
+
+            name: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: true,
+                new: true,
+              },
+            },
+            isVerified: {
+              isVisible: true,
+            },
+            isActive: {
+              isVisible: true,
+            },
+            website: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: true,
+                new: true,
+              },
+            }
+          },
+          actions: {
+            bulkDelete: {
+              isVisible: false,
+            },
+            edit: {
+              isVisible: true,
+            },
+            delete: {
+              isVisible: false,
+            }
+          },
+        },
+      },
+      {
+        resource: Admin,
+        options: {
+          properties: {
+            adminId: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: false,
+                new: false,
+              },
+            },
+            encryptedPassword: {
+              isVisible: false
+            },
+            password: {
+              type: 'string',
+              isVisible: {
+                list: false,
+                edit: true,
+                filter: false,
+                show: false,
+              }
+            },
+            firstName: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: true,
+                new: true,
+              },
+            },
+            lastName: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: true,
+                new: true,
+              },
+            },
+            email: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: true,
+                new: true,
+              },
+            },
+            role: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: true,
+                new: true,
+              },
+            }
+          },
+          actions: {
+            delete: {
+              isVisible: false,
+            },
+            bulkDelete: {
+              isVisible: false,
+            },
+            new: {
+              // @ts-ignore
+              isAccessible: ({ currentAdmin }) =>
+                currentAdmin && currentAdmin.role === AdminRole.SUPER_ADMIN,
+              before: async (
+                request: AdminBroRequestInterface,
+                context: AdminBroContextInterface,
+              ) => {
+                if (request.payload.password) {
+                  const bc = await bcrypt.hash(
+                    request.payload.password,
+                    Number(process.env.BCRYPT_SALT),
+                  );
+                  request.payload = {
+                    ...request.payload,
+                    // For making an backoffice user admin, we should just use changing it directly in DB
+                    encryptedPassword: bc,
+                    password: null,
+                  };
+                }
+                return request;
+              },
+            },
+            edit: {
+              // @ts-ignore
+              isAccessible: ({ currentAdmin }) =>
+                currentAdmin && currentAdmin.role === AdminRole.SUPER_ADMIN,
+              before: async (  request: AdminBroRequestInterface,
+                               context: AdminBroContextInterface,) => {
+                logger.debug({ request: request.payload });
+                if (request.payload.password) {
+                  const bc = await bcrypt.hash(
+                    request.payload.password,
+                    Number(process.env.BCRYPT_SALT),
+                  );
+                  request.payload = {
+                    ...request.payload,
+                    encryptedPassword: bc,
+                    password: null,
+                  };
+                }
+                return request;
+              },
+            },
+          },
+
+        },
+      },
+    ],
+    rootPath: adminJsRootPath,
+  });
+};
+
+interface AdminBroProjectsQuery {
+  statusId?: string;
+  title?: string;
+  slug?: string;
+  verified?: string;
+  listed?: string;
+}
+
+
+
+
+
+export const adminJsRootPath = '/admin';
