@@ -30,7 +30,7 @@ export class Log extends BaseEntity {
   @Column()
   status: string;
   @Column()
-  ip: string;
+  ip?: string;
   @Column()
   statusCode?: number;
   @Column()

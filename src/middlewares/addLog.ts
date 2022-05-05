@@ -17,7 +17,7 @@ export const addLog = async (
     status: LogStatus.PENDING,
     method: req.method,
     trackId,
-    ip : (req.headers['x-forwarded-for'] || req.socket.remoteAddress)
+    ip : String(req.headers['x-forwarded-for'] || req.socket.remoteAddress) || ""
   });
   res.locals.trackId = trackId;
   next();

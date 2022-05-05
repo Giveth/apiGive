@@ -28,6 +28,7 @@ describe('createNewLog() test cases', () => {
       status: LogStatus.PENDING,
       trackId,
       method: 'GET',
+      ip:"0.0.0.0"
     };
     const log = await createNewLog(logData);
     assert.isOk(log);
@@ -43,6 +44,8 @@ describe('updateScopeLog() test cases', () => {
       status: LogStatus.PENDING,
       trackId,
       method: 'GET',
+      ip:"0.0.0.0"
+
     };
     const log = await createNewLog(logData);
     await updateScopeLog({
@@ -72,6 +75,8 @@ describe('updateFailedLog() test cases', () => {
       status: LogStatus.PENDING,
       trackId,
       method: 'GET',
+      ip:"0.0.0.0"
+
     };
     const log = await createNewLog(logData);
     await updateFailedLog({
@@ -104,6 +109,8 @@ describe('updateSuccessLog() test cases', () => {
       status: LogStatus.PENDING,
       trackId,
       method: 'GET',
+      ip:"0.0.0.0"
+
     };
     const log = await createNewLog(logData);
     await updateSuccessLog({
@@ -136,6 +143,8 @@ describe('updateAccessTokenAndApplication() test cases', () => {
       status: LogStatus.PENDING,
       trackId,
       method: 'GET',
+      ip:"0.0.0.0"
+
     };
     const log = await createNewLog(logData);
     const application = (await findApplicationById(
