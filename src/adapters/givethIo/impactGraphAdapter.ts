@@ -1,13 +1,12 @@
-import { Application } from '../../entities/application';
-import { CreateDonationRequest } from '../../types/requestResponses';
-import { GivethIoInterface } from './givethIoInterface';
-import { createBasicAuthentication } from '../../utils/authorizationUtils';
-import axios from 'axios';
-import exp from 'constants';
-import { networkIds } from '../../utils/utils';
-import { logger } from '../../utils/logger';
-import { StandardError } from '../../types/StandardError';
-import { errorMessagesEnum } from '../../utils/errorMessages';
+import { Application } from "../../entities/application";
+import { CreateDonationRequest } from "../../types/requestResponses";
+import { GivethIoInterface } from "./givethIoInterface";
+import { createBasicAuthentication } from "../../utils/authorizationUtils";
+import axios from "axios";
+import { networkIds } from "../../utils/utils";
+import { logger } from "../../utils/logger";
+import { StandardError } from "../../types/StandardError";
+import { errorMessagesEnum } from "../../utils/errorMessages";
 
 const impactGraphBaseUrl = process.env.IMPACT_GRAPH_BASE_URL as string;
 

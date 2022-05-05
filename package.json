@@ -20,6 +20,7 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "prettify": "prettier  --write '**/*.ts*'",
     "db:migrate:run:local": "NODE_ENV=development npx typeorm-ts-node-esm migration:run -d ./src/dataSource.ts ",
+    "db:migrate:run:staging": "NODE_ENV=staging npx typeorm-ts-node-esm migration:run -d ./src/dataSource.ts ",
     "db:migrate:revert:local": "NODE_ENV=development npx typeorm-ts-node-esm migration:revert -d ./src/dataSource.ts ",
     "db:migrate:run:test": "NODE_ENV=test npx typeorm-ts-node-esm migration:run -d ./src/dataSource.ts ",
     "db:migrate:revert:test": "NODE_ENV=test npx typeorm-ts-node-esm migration:revert -d ./src/dataSource.ts "
@@ -62,7 +63,7 @@
     "eslint": "8.10.0",
     "eslint-config-prettier": "8.5.0",
     "husky": "7.0.4",
-    "mocha": "^9.2.2",
+    "mocha": "9.2.2",
     "pgtools": "^0.3.2",
     "prettier": "2.5.1",
     "ts-node": "10.7.0",

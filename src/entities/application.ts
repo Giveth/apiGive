@@ -34,7 +34,7 @@ export class Application extends BaseEntity {
   isActive: boolean;
 
   @Index()
-  @ManyToOne(_type => Organization)
+  @ManyToOne(() => Organization)
   organization: Organization;
   @RelationId((application: Application) => application.organization)
   organizationId: number;

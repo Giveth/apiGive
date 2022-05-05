@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { decodeBasicAuthentication } from '../utils/authorizationUtils';
-import { findApplicationByBasicAuthData } from '../services/applicationService';
 import { findActiveTokenByValue } from '../repositories/accessTokenRepository';
 import {
   findApplicationById,
