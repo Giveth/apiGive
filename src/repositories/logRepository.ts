@@ -7,6 +7,7 @@ export const createNewLog = async (params: {
   status: string;
   trackId: string;
   method: string;
+  ip: any;
 }): Promise<Log> => {
   return Log.create({ ...params }).save();
 };
