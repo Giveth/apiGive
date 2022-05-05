@@ -49,8 +49,6 @@ export const updateAccessTokenAndApplication = async (data: {
   const { trackId, application, accessToken } = data;
 
   await Log.update({ trackId }, {
-    // applicationId: application.id,
-    // accessTokenId: accessToken.id,
     application,
     accessToken
   });
