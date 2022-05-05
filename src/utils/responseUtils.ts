@@ -1,5 +1,8 @@
 import express, { Request, Response } from 'express';
 import { updateSuccessLog } from '../repositories/logRepository';
+import { logger } from './logger';
+
+
 
 export const sendStandardResponse = (
   data: {
@@ -15,5 +18,5 @@ export const sendStandardResponse = (
     result: JSON.stringify(result),
     statusCode: httpStatusCode,
   });
-  res.status(httpStatusCode).send(result);
+  res.status(httpStatusCode).json({result,trackId});
 };

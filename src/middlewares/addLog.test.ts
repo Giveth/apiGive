@@ -111,33 +111,31 @@ describe('add log for failed requests,  test cases', () => {
   });
 });
 
-//TODO Fagha ask if add trackId to success response or not
 
-// describe('add log for success requests,  test cases', () => {
-//   it('should add log for success requests successfully', async () => {
-//     const applicationData = SEED_DATA.firstApplication;
-//       const result = await axios.post(
-//         `${serverUrl}/v1/accessToken`,
-//         {
-//           scopes: [scopeLabels.CREATE_DONATION],
-//         },
-//         {
-//           headers: {
-//             authorization: createBasicAuthentication({
-//               username: applicationData.label,
-//               secret: applicationData.secret,
-//             }),
-//           },
-//         },
-//       );
-//       console.log("resultttt",result.data)
-//       await sleep(1000)
-//       const newLog = await Log.findOne({where:{trackId:result.data.trackId}})
-//       assert.equal(result.data.httpStatusCode,newLog?.statusCode);
-//       assert.equal(newLog?.url,"accessToken");
-//       assert.equal(newLog?.method,'POST');
-//       assert.equal(newLog?.status,LogStatus.DONE);
-//       assert.equal(newLog?.applicationId,applicationData.id);
-//
-//     })
-// });
+describe('add log for success requests,  test cases', () => {
+  it('should add log for success requests successfully', async () => {
+    const applicationData = SEED_DATA.firstApplication;
+      const result = await axios.post(
+        `${serverUrl}/v1/accessToken`,
+        {
+          scopes: [scopeLabels.CREATE_DONATION],
+        },
+        {
+          headers: {
+            authorization: createBasicAuthentication({
+              username: applicationData.label,
+              secret: applicationData.secret,
+            }),
+          },
+        },
+      );
+
+      await sleep(1000)
+      const newLog = await Log.findOne({where:{trackId:result.data.trackId}})
+    assert.equal(newLog?.url,"/v1/accessToken");
+      assert.equal(newLog?.method,'POST');
+      assert.equal(newLog?.status,LogStatus.DONE);
+      assert.equal(newLog?.applicationId,applicationData.id);
+
+    })
+});
