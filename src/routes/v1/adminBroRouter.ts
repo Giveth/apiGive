@@ -1,8 +1,6 @@
-import { IncomingMessage } from 'connect';
 import { redis } from '../../services/redis';
 import { Admin, AdminRole } from '../../entities/admin';
 const AdminJS = require('adminjs');
-// use redis for session data instead of in-memory storage
 // tslint:disable-next-line:no-var-requires
 const bcrypt = require('bcrypt');
 // tslint:disable-next-line:no-var-requires
@@ -10,44 +8,15 @@ const session = require('express-session');
 // tslint:disable-next-line:no-var-requires
 const RedisStore = require('connect-redis')(session);
 // tslint:disable-next-line:no-var-requires
-const cookie = require('cookie');
-// tslint:disable-next-line:no-var-requires
-const cookieParser = require('cookie-parser');
 const secret = process.env.ADMIN_BRO_COOKIE_SECRET  || "test_secret";
 // tslint:disable-next-line:no-var-requires
 const AdminJSExpress = require('@adminjs/express');
 import { Database, Resource } from '@adminjs/typeorm';
 import { findAdminByEmail } from '../../repositories/adminRepository';
 import { logger } from '../../utils/logger';
-import { NextFunction } from 'express';
 import { Application } from '../../entities/application';
 import { Organization } from '../../entities/organization';
-import { debug } from 'util';
 
-const express = require('express');
-const app = express();
-// const { records } = context;
-// const rawQueryStrings = await redis.get(
-//   `adminbro_${context.currentAdmin.id}_qs`,
-// );
-// headers defined by the verification team for exporting
-const headers = [
-  'id',
-  'title',
-  'slug',
-  'admin',
-  'creationDate',
-  'updatedAt',
-  'impactLocation',
-  'walletAddress',
-  'statusId',
-  'qualityScore',
-  'verified',
-  'listed',
-  'totalDonations',
-  'totalProjectUpdates',
-  'website',
-];
 
 interface AdminBroContextInterface {
   h: any;
@@ -66,7 +35,6 @@ interface AdminBroRequestInterface {
 }
 
 AdminJS.registerAdapter({ Database, Resource });
-// AdminJSExpress.buildRouter(adminJs, router)
 
 export const getAdminBroRouter = async () => {
   return AdminJSExpress.buildAuthenticatedRouter(
@@ -75,7 +43,6 @@ export const getAdminBroRouter = async () => {
       authenticate: async (email: string, password: string) => {
         try {
           const user = await findAdminByEmail(email);
-          logger.debug("useeer>>>>",user)
           if (user) {
             const matched = await bcrypt.compare(
               password,
@@ -93,10 +60,8 @@ export const getAdminBroRouter = async () => {
       },
       cookiePassword: secret,
     },
-    // custom router to save admin in req.session for express middlewares
     null,
     {
-      // default values that will be deprecated, need to define them manually
       resave: false,
       saveUninitialized: true,
       rolling: false,
@@ -170,58 +135,6 @@ const getAdminBroInstance = async () => {
                 show: true,
                 edit: false,
                 new: false,
-              },
-            }
-          },
-          actions: {
-            bulkDelete: {
-              isVisible: false,
-            },
-            edit: {
-              isVisible: true,
-            },
-            delete: {
-              isVisible: false,
-            }
-          },
-        },
-      },
-      {
-        resource: Organization,
-        options: {
-          properties: {
-            organizationId: {
-              isVisible: {
-                list: true,
-                filter: true,
-                show: true,
-                edit: false,
-                new: false,
-              },
-            },
-
-            name: {
-              isVisible: {
-                list: true,
-                filter: true,
-                show: true,
-                edit: true,
-                new: true,
-              },
-            },
-            isVerified: {
-              isVisible: true,
-            },
-            isActive: {
-              isVisible: true,
-            },
-            website: {
-              isVisible: {
-                list: true,
-                filter: true,
-                show: true,
-                edit: true,
-                new: true,
               },
             }
           },
@@ -374,7 +287,6 @@ const getAdminBroInstance = async () => {
                   );
                   request.payload = {
                     ...request.payload,
-                    // For making an backoffice user admin, we should just use changing it directly in DB
                     encryptedPassword: bc,
                     password: null,
                   };
@@ -411,15 +323,6 @@ const getAdminBroInstance = async () => {
     rootPath: adminJsRootPath,
   });
 };
-
-interface AdminBroProjectsQuery {
-  statusId?: string;
-  title?: string;
-  slug?: string;
-  verified?: string;
-  listed?: string;
-}
-
 
 
 
