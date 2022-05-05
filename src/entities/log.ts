@@ -27,13 +27,13 @@ export class Log extends BaseEntity {
   result: string;
 
   @Index()
-  @ManyToOne(_type => Application)
+  @ManyToOne(() => Application)
   application: Application;
   @RelationId((log: Log) => log.application)
   applicationId: number;
 
   @Index()
-  @ManyToOne(_type => AccessToken)
+  @ManyToOne(() => AccessToken)
   accessToken: AccessToken;
   @RelationId((log: Log) => log.accessToken)
   accessTokenId: number;
