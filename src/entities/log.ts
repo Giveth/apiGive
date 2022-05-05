@@ -38,10 +38,6 @@ export class Log extends BaseEntity {
   @Column()
   trackId: string;
   @Column()
-  createdAt: string;
-  @Column()
-  updatedAt: string;
-  @Column()
   result?: string;
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   public created_at: Date;
