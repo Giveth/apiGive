@@ -7,9 +7,11 @@ COPY tsconfig.json .
 COPY tsoa.json .
 COPY package*.json ./
 COPY src ./src
+COPY migrations ./migrations
 COPY test ./test
 
 RUN npm ci
 RUN npm i -g pm2
 RUN npm run build #It will run prebuild script for generating swagger spec by tsoa as well
-CMD npm run db:migrate:run:staging && pm2-runtime dist/src/index.js
+RUN cp -rv public ./dist
+CMD npm run db:migrate:run:staging && cd dist &&  pm2-runtime src/index.js
