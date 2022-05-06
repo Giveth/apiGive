@@ -6,20 +6,21 @@ export class createLogTable1651305296248 implements MigrationInterface {
       `
 CREATE TABLE IF NOT EXISTS public.log
 (
-    id SERIAL NOT NULL ,
+     id SERIAL NOT NULL,
     status character varying COLLATE pg_catalog."default" NOT NULL,
-    error character varying COLLATE pg_catalog."default",
     "trackId" character varying COLLATE pg_catalog."default" NOT NULL,
-    result character varying COLLATE pg_catalog."default" ,
     "applicationId" integer,
     "accessTokenId" integer,
     url character varying COLLATE pg_catalog."default" NOT NULL,
     method character varying COLLATE pg_catalog."default" NOT NULL,
-    scope character varying COLLATE pg_catalog."default" ,
-    ip character varying COLLATE pg_catalog."default" NOT NULL,
-    "statusCode" integer ,
-    created_at timestamp without time zone NOT NULL DEFAULT ('now'::text)::timestamp(6) with time zone,
-    updated_at timestamp without time zone NOT NULL DEFAULT ('now'::text)::timestamp(6) with time zone,
+    "createdAt" timestamp without time zone NOT NULL DEFAULT now(),
+    "updatedAt" timestamp without time zone NOT NULL DEFAULT now(),
+    scope text COLLATE pg_catalog."default",
+    ip text COLLATE pg_catalog."default",
+    "statusCode" integer,
+    error text COLLATE pg_catalog."default",
+    result text COLLATE pg_catalog."default",
+    application integer,
     CONSTRAINT "PK_350604cbdf991d5930d9e618fbd" PRIMARY KEY (id),
     CONSTRAINT "FK_12dfd3eec15a6781fac998ddb50" FOREIGN KEY ("accessTokenId")
         REFERENCES public.access_token (id) MATCH SIMPLE

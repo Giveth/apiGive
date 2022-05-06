@@ -25,33 +25,36 @@ export class Log extends BaseEntity {
   url: string;
   @Column()
   method: string;
-  @Column()
+  @Column('text', { nullable: true })
   scope?: string;
   @Column()
   status: string;
-  @Column()
+  @Column('text', { nullable: true })
   ip?: string;
-  @Column()
+  @Column('integer', { nullable: true })
   statusCode?: number;
-  @Column()
+  @Column('text', { nullable: true })
   error?: string;
   @Column()
   trackId: string;
-  @Column()
+  @Column('text', { nullable: true })
   result?: string;
-  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
-  public created_at: Date;
-  @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
-  public updated_at: Date;
+  // @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(1)" })
+  // createdAt: Date;
+  // @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(1)", onUpdate: "CURRENT_TIMESTAMP(1)" })
+  // updatedAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
   @Index()
   @ManyToOne(_type => Application)
   application?: Application;
   @RelationId((log: Log) => log.application)
   applicationId?: number;
-
   @Index()
   @ManyToOne(_type => AccessToken)
-  accessToken: AccessToken;
+  accessToken?: AccessToken;
   @RelationId((log: Log) => log.accessToken)
-  accessTokenId: number;
+  accessTokenId?: number;
 }

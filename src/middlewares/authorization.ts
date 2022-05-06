@@ -7,7 +7,7 @@ export const getAccessScopeMiddleware = (params: { scope: string }) => {
   const { scope } = params;
   return (_req: Request, res: Response, next: NextFunction) => {
     const accessToken = res.locals.accessToken;
-    const trackId = res.locals.log.trackid;
+    const trackId = res.locals.trackId;
     updateScopeLog({ trackId, scope });
 
     if (accessToken.scopes.includes(scope)) {
