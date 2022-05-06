@@ -6,6 +6,7 @@ export enum AdminRole {
   OPERATOR = 'operator',
 }
 
+
 @Entity()
 @Unique(['email'])
 export class Admin extends BaseEntity {
