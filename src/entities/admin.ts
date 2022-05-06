@@ -1,9 +1,8 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { BaseEntity, Column, Entity, Index, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 export enum AdminRole {
   ADMIN = 'admin',
   SUPER_ADMIN = 'superAdmin',
-  RESTRICTED = 'restricted',
   OPERATOR = 'operator',
 }
 
@@ -22,10 +21,11 @@ export class Admin extends BaseEntity {
   @Column({
     type: 'enum',
     enum: AdminRole,
-    default: AdminRole.RESTRICTED,
+    default: AdminRole.OPERATOR,
   })
   role: AdminRole;
 
+  @Index({ unique: true })
   @Column({ type: 'varchar' })
   public email: string;
 

@@ -5,6 +5,5 @@ export const findAdminByEmail = async (
 ): Promise<Admin | null> => {
   return Admin.createQueryBuilder()
     .where(`email = :email`, { email })
-    .andWhere(`role != '${AdminRole.RESTRICTED}'`)
     .getOne();
 };
