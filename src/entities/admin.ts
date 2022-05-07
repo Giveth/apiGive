@@ -13,10 +13,10 @@ export class Admin extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({ type: 'varchar' })
+  @Column('text', { nullable: true })
   public firstName?: string;
 
-  @Column({ type: 'varchar' })
+  @Column('text', { nullable: true })
   public lastName?: string;
 
   @Column({
@@ -27,9 +27,9 @@ export class Admin extends BaseEntity {
   role: AdminRole;
 
   @Index({ unique: true })
-  @Column({ type: 'varchar' })
+  @Column({ type: 'text' })
   public email: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'text' })
   public encryptedPassword: string;
 }

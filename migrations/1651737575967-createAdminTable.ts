@@ -7,7 +7,7 @@ export class createAdminTable1651737575967 implements MigrationInterface {
           `
           CREATE TABLE IF NOT EXISTS public.admin
 (
-    id integer NOT NULL,
+    id SERIAL NOT NULL,
     "firstName" character varying COLLATE pg_catalog."default",
     "lastName" character varying COLLATE pg_catalog."default",
     role  character varying COLLATE pg_catalog."default" NOT NULL,
