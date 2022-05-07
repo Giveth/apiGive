@@ -1,23 +1,18 @@
 import { redis } from '../../services/redis';
 import { Admin, AdminRole } from '../../entities/admin';
-const AdminJS = require('adminjs');
-// tslint:disable-next-line:no-var-requires
-const bcrypt = require('bcrypt');
-// tslint:disable-next-line:no-var-requires
-const session = require('express-session');
-// tslint:disable-next-line:no-var-requires
-const RedisStore = require('connect-redis')(session);
-// tslint:disable-next-line:no-var-requires
+import AdminJS from 'adminjs';
+import bcrypt from 'bcrypt';
+import session from 'express-session';
 const secret = process.env.ADMIN_BRO_COOKIE_SECRET  || "test_secret";
-// tslint:disable-next-line:no-var-requires
-const AdminJSExpress = require('@adminjs/express');
+import AdminJSExpress from '@adminjs/express';
 import { Database, Resource } from '@adminjs/typeorm';
 import { findAdminByEmail } from '../../repositories/adminRepository';
 import { logger } from '../../utils/logger';
 import { Application } from '../../entities/application';
 import { Organization } from '../../entities/organization';
 
-
+// eslint:disable-next-line:no-var-requires
+const RedisStore = require('connect-redis')(session);
 interface AdminBroContextInterface {
   h: any;
   resource: any;
