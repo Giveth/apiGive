@@ -268,9 +268,8 @@ const getAdminBroInstance = async () => {
               isVisible: false,
             },
             new: {
-              // @ts-ignore
-              isAccessible: ({ currentAdmin }) =>
-                currentAdmin && currentAdmin.role === AdminRole.SUPER_ADMIN,
+              isAccessible: (params:{ currentAdmin:Admin }) =>
+                params.currentAdmin && params.currentAdmin.role === AdminRole.SUPER_ADMIN,
               before: async (
                 request: AdminBroRequestInterface,
                 context: AdminBroContextInterface,
@@ -290,9 +289,8 @@ const getAdminBroInstance = async () => {
               },
             },
             edit: {
-              // @ts-ignore
-              isAccessible: ({ currentAdmin }) =>
-                currentAdmin && currentAdmin.role === AdminRole.SUPER_ADMIN,
+              isAccessible: (params:{ currentAdmin:Admin }) =>
+                params.currentAdmin && params.currentAdmin.role === AdminRole.SUPER_ADMIN,
               before: async (  request: AdminBroRequestInterface,
                                context: AdminBroContextInterface,) => {
                 logger.debug({ request: request.payload });
