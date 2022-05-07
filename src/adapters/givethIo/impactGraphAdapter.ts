@@ -18,7 +18,7 @@ export class ImpactGraphAdapter implements GivethIoInterface {
     try {
       const basicAuth = createBasicAuthentication({
         secret: process.env.IMPACT_GRAPH_BASIC_AUTH_SECRET as string,
-        username: process.env.IMPACT_GRAPH_BASIC_AUTH_USERNAME as string
+        username: process.env.IMPACT_GRAPH_BASIC_AUTH_USERNAME as string,
       });
       const body = {
         fromWalletAddress: params.inputData.fromWalletAddress,
@@ -35,28 +35,30 @@ export class ImpactGraphAdapter implements GivethIoInterface {
         currency: params.inputData.currency,
 
         //TODO we can support pending as well
-        status: "verified",
-        donationType: params.application.label
+        status: 'verified',
+        donationType: params.application.label,
       };
       const result = await axios.post(
         `${impactGraphBaseUrl}/apigive/donations`,
         body,
         {
           headers: {
-            authorization: basicAuth
-          }
-        }
+            authorization: basicAuth,
+          },
+        },
       );
       return {
-        donationId: result.data.id
+        donationId: result.data.id,
       };
     } catch (e: any) {
       if (e.response && e.response.status === 400) {
-        const error = new StandardError(errorMessagesEnum.IMPACT_GRAPH_VALIDATION_ERROR);
+        const error = new StandardError(
+          errorMessagesEnum.IMPACT_GRAPH_VALIDATION_ERROR,
+        );
         error.description = e.response?.data?.message;
-        throw  error;
+        throw error;
       }
-      logger.error("ImpactGraphAdapter.createDonation() error", e);
+      logger.error('ImpactGraphAdapter.createDonation() error', e);
       throw e;
     }
   }

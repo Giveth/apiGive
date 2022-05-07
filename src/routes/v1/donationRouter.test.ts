@@ -10,6 +10,7 @@ import { create } from 'domain';
 import { createBasicAuthentication } from '../../utils/authorizationUtils';
 import { scopeLabels } from '../../services/scopeService';
 import { application } from 'express';
+import { logger } from '../../utils/logger';
 
 describe('/donations POST test cases', postDonationsTestCases);
 
@@ -35,11 +36,11 @@ function postDonationsTestCases() {
       },
       {
         headers: {
-          authorization: `Bearer ${accessToken}`,
+          authorization: `Bearer ${accessToken.jwt}`,
         },
       },
     );
     assert.equal(result.status, 200);
-    assert.isNumber(result.data.donationId);
+    assert.isNumber(result.data.result.donationId);
   });
 }
