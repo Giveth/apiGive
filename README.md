@@ -1,7 +1,7 @@
 # API Give
 API Give is a project that provide open API for third parties to can work with https://giveth.io (https://github.com/Giveth/impact-graph)
 
-[Used Technologies](#Used Technologies)
+[Used Technologies](#Used_Technologies)
 
 [Installation](#Installation)
 
@@ -15,7 +15,7 @@ API Give is a project that provide open API for third parties to can work with h
 
 [References](#References)
 
-### Used Technologies
+### Used_Technologies
 * Nodejs **v16**
 * Typescript **v4.5.2**
 * DB: postgres **v14.2**
