@@ -24,6 +24,11 @@ export class seedTestAdminUser1651993685342 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(
+          `
+            DELETE FROM admin
+        `,
+        );
     }
 
 }
