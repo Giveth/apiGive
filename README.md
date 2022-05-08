@@ -39,7 +39,7 @@ API Give is a project that provide open API for third parties to can work with h
 * Run [Migrations](#Migrations)
 * `npm start`
 * Now you can browse [Swagger](http:localhost:3040/docs)
-* You can login in  [Admin panel](http:localhost:3040/admin) username: **test-admin@giveth.io** password: **12345**
+* If you ran migrations successfully then you are able to login in  [Admin panel](http:localhost:3040/admin) username: **test-admin@giveth.io** password: **12345**
 
 ### Test
 You should have a postgress instance up in order to running tests so you can use  [Local DB docker-compose](./docker-compose-local-postgres-redis.ym)
