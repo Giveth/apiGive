@@ -20,6 +20,7 @@ API Give is a project that provide open API for third parties to can work with h
 * Typescript **v4.5.2**
 * DB: postgres **v14.2**
 * DB ORM: TypeORM **v0.3.6**
+* Redis **v5.0.9**
 * API protocol : REST
 * Web application: Express **v4.17.3**
 * Deployment: docker-compose **v3.3**
