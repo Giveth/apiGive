@@ -35,10 +35,11 @@ API Give is a project that provide open API for third parties to can work with h
 * `npm ci`
 * Bringing up database, you can install that in other way, but I suggest
   using docker `docker-compose -f docker-compose-local-postgres-redis.ym up -d`
-* Run [Migrations](#Migrations) 
 * Creat a file named `development.env` based on [Env example file](./config/example.env) and put it in `./config`
+* Run [Migrations](#Migrations)
 * `npm start`
 * Now you can browse [Swagger](http:localhost:3040/docs)
+* You can login in  [Admin panel](http:localhost:3040/admin) username: **test-admin@giveth.io** password: **12345**
 
 ### Test
 You should have a postgress instance up in order to running tests so you can use  [Local DB docker-compose](./docker-compose-local-postgres-redis.ym)
