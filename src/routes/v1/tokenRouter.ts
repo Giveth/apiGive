@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { authenticateThirdPartyBasicAuth } from '../../middlewares/authentication';
 import { TokenController } from '../../controllers/v1/tokenController';
-import { logger } from '../../utils/logger';
+import { sendStandardResponse } from '../../utils/responseUtils';
 
 export const tokenRouter = express.Router();
 const tokenController = new TokenController();
@@ -9,8 +9,9 @@ tokenRouter.post(
   '/accessToken',
   authenticateThirdPartyBasicAuth,
   async (req: Request, res: Response, next) => {
+    const { application, log } = res.locals;
+
     try {
-      const { application } = res.locals;
       const result = await tokenController.generateAccessToken(
         {
           scopes: req.body.scopes,
@@ -19,7 +20,7 @@ tokenRouter.post(
           application,
         },
       );
-      res.send(result);
+      return sendStandardResponse({ res, result });
     } catch (e) {
       next(e);
     }

@@ -5,6 +5,7 @@ import { MESSAGES } from '../../utils/messages';
 import { create } from 'domain';
 import { createBasicAuthentication } from '../../utils/authorizationUtils';
 import { scopeLabels } from '../../services/scopeService';
+import { Log, LogStatus } from '../../entities/log';
 
 describe('/accessToken POST test cases', postAccessTokenTestCases);
 
@@ -26,7 +27,7 @@ function postAccessTokenTestCases() {
       },
     );
     assert.equal(result.status, 200);
-    assert.isOk(result.data.accessToken);
-    assert.equal(result.data.payload.applicationId, applicationData.id);
+    assert.isOk(result.data.result.accessToken);
+    assert.equal(result.data.result.payload.applicationId, applicationData.id);
   });
 }
