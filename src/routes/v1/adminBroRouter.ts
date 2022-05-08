@@ -1,10 +1,14 @@
 import { redis } from '../../services/redis';
 import { Admin, AdminRole } from '../../entities/admin';
-import AdminJS from 'adminjs';
-import bcrypt from 'bcrypt';
-import session from 'express-session';
+// eslint:disable-next-line:no-var-requires
+const AdminJS =require('adminjs');
+// eslint:disable-next-line:no-var-requires
+const bcrypt =  require('bcrypt');
+// eslint:disable-next-line:no-var-requires
+const session = require('express-session');
 const secret = process.env.ADMIN_BRO_COOKIE_SECRET  || "test_secret";
-import AdminJSExpress from '@adminjs/express';
+// eslint:disable-next-line:no-var-requires
+const AdminJSExpress =  require( '@adminjs/express');
 import { Database, Resource } from '@adminjs/typeorm';
 import { findAdminByEmail } from '../../repositories/adminRepository';
 import { logger } from '../../utils/logger';
