@@ -13,6 +13,8 @@ API Give is a project that provide open API for third parties to can work with h
 
 [Architecture](#Architecture)
 
+[You want to use our API right now?](#Staging_Guide)
+
 [References](#References)
 
 ### Used_Technologies
@@ -77,6 +79,19 @@ npm run db:migrate:revert:local
 
 You can see [Entities Diagram](./diagrams/main_flow.md) to get insight about entities
 
+### Staging_Guide
+If you want to use our API in staging ENV, you have to do these steps:
+* You can ask us in [Discord](https://discord.com/channels/679428761438912522/861692942645067777) to create an application for you, and give you the **username** and secret of your **application**
+* Then you can go to https://staging.apigive.giveth.io/docs/#/Token/GenerateAccessToken and get access token (there is **lock** icon in right 
+of url section, you should click on that and insert the **username** and **secret** that we gave you)
+* copy the generated access token and use it in further donations for instance https://staging.apigive.giveth.io/docs/#/Donation/CreateDonation
+  (There is **lock** icon in right of url section, you should fill it with **Bearer {yourAccessToken}**)
+
+If you are a giveth contributor you can access to admin panel ( for creating application/organizations and viewing logs, ...), so you need to these steps
+* Ask us to create a **VPN** for you in [Discord](https://discord.com/channels/679428761438912522/861692942645067777)
+* Ask us to create an admin user for you, with your email in [Discord](https://discord.com/channels/679428761438912522/861692942645067777)
+* Then you can go to https://staging.apigive.giveth.io/admin (your VPN should be connected otherwise you will get 403 error)
+* Login with your email and password ( that you gave use before to create admin user for you)
 
 ## References
 
