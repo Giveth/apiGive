@@ -128,22 +128,19 @@ const getAdminBroInstance = async () => {
               isVisible: true,
             },
             scopes: {
-              isVisible: true,
+              isVisible: {
+                list: false,
+                filter: false,
+                show: true,
+                edit: true,
+                new: false,
+              },
             },
             logo: {
               isVisible: true,
             },
             allowedRequestsPerHour: {
               isVisible: true,
-            },
-            organization: {
-              isVisible: {
-                list: true,
-                filter: true,
-                show: true,
-                edit: false,
-                new: false,
-              },
             },
           },
           actions: {
