@@ -23,10 +23,7 @@ export const initServer = async () => {
 
   app.use(express.static('public'));
   app.use(bodyParser.json());
-  app.use(addLog);
   app.use(adminJsRootPath, await getAdminBroRouter());
-
-  app.use(v1Router);
   app.use(
     '/docs',
     swaggerUi.serve,
@@ -36,6 +33,11 @@ export const initServer = async () => {
       },
     }),
   );
+  app.use(addLog);
+
+
+  app.use(v1Router);
+
   app.use(errorHandler);
   const port = process.env.PORT || 3040;
   app.listen(port, () => {
