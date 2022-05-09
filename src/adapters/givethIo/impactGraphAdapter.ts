@@ -21,8 +21,8 @@ export class ImpactGraphAdapter implements GivethIoInterface {
         username: process.env.IMPACT_GRAPH_BASIC_AUTH_USERNAME as string,
       });
       const body = {
-        fromWalletAddress: params.inputData.fromWalletAddress,
-        toWalletAddress: params.inputData.toWalletAddress,
+        fromWalletAddress: params.inputData.fromWalletAddress.toLowerCase(),
+        toWalletAddress: params.inputData.toWalletAddress.toLowerCase(),
         valueUsd: params.inputData.priceUsd * params.inputData.amount,
         priceUsd: params.inputData.priceUsd,
         amount: params.inputData.amount,
