@@ -124,6 +124,33 @@ const getAdminBroInstance = async () => {
             name: {
               isVisible: true,
             },
+            validIps: {
+                isVisible: {
+                  list: false,
+                  filter: false,
+                  show: true,
+                  edit: true,
+                  new: false,
+              },
+            },
+            logo: {
+                isVisible: {
+                  list: false,
+                  filter: false,
+                  show: true,
+                  edit: true,
+                  new: false,
+              },
+            },
+            allowedRequestsPerHour: {
+                isVisible: {
+                  list: false,
+                  filter: false,
+                  show: true,
+                  edit: true,
+                  new: false,
+              },
+            },
             secret: {
               isVisible: true,
             },
@@ -135,12 +162,6 @@ const getAdminBroInstance = async () => {
                 edit: true,
                 new: false,
               },
-            },
-            logo: {
-              isVisible: true,
-            },
-            allowedRequestsPerHour: {
-              isVisible: true,
             },
           },
           actions: {
