@@ -90,7 +90,16 @@ const getAdminBroInstance = async () => {
         resource: Application,
         options: {
           properties: {
-            applicationId: {
+            organizationId: {
+              isVisible: {
+                list: true,
+                filter: true,
+                show: true,
+                edit: false,
+                new: false,
+              },
+            },
+            id: {
               isVisible: {
                 list: true,
                 filter: true,
@@ -154,7 +163,7 @@ const getAdminBroInstance = async () => {
         resource: Organization,
         options: {
           properties: {
-            organizationId: {
+            id: {
               isVisible: {
                 list: true,
                 filter: true,
