@@ -4,6 +4,7 @@ services:
   apigive-postgress:
     image: postgres:14.2-bullseye
     container_name: apigive-postgress
+    restart: always
     environment:
       - POSTGRES_DB=apigive
       - POSTGRES_USER=postgres
@@ -19,6 +20,7 @@ services:
     # For running application use above container
     image: postgres:14.2-bullseye
     container_name: apigive-postgress-test
+    restart: always
     environment:
       - POSTGRES_DB=apigive
       - POSTGRES_USER=postgres
