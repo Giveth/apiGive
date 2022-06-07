@@ -11,6 +11,7 @@ services:
     # 3. docker-compose -f docker-compose-staging.yml up -d
     image: ghcr.io/giveth/apigive:staging
     command: npm run start:server:staging
+    restart: always
     environment:
       - NODE_ENV=staging
     volumes:
