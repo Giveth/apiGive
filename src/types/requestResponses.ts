@@ -11,7 +11,6 @@ export type CreateDonationRequest = {
    */
   currency: string;
 
-
   /**
    * @example false
    */
@@ -28,7 +27,7 @@ export type CreateDonationRequest = {
   fromWalletAddress: string;
 
   /**
-   * @example "0x826976d7c600d45fb8287ca1d7c76fc8eb732030"
+   * @example "0xa7760455726A8E8aC93cEFcf62B8C461c08e220d"
    */
   toWalletAddress: string;
 

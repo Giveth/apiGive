@@ -5,6 +5,8 @@ import { AppDataSource } from './dataSource';
 import { DataSource } from 'typeorm';
 import bodyParser from 'body-parser';
 import { errorHandler } from './middlewares/errorHandler';
+import { adminJsRootPath, getAdminBroRouter } from './routes/v1/adminBroRouter';
+import { addLog } from './middlewares/addLog';
 
 export let dbConnection: DataSource;
 export const initDbConnection = async () => {
@@ -21,8 +23,7 @@ export const initServer = async () => {
 
   app.use(express.static('public'));
   app.use(bodyParser.json());
-
-  app.use(v1Router);
+  app.use(adminJsRootPath, await getAdminBroRouter());
   app.use(
     '/docs',
     swaggerUi.serve,
@@ -32,6 +33,11 @@ export const initServer = async () => {
       },
     }),
   );
+  app.use(addLog);
+
+
+  app.use(v1Router);
+
   app.use(errorHandler);
   const port = process.env.PORT || 3040;
   app.listen(port, () => {

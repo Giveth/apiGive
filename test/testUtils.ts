@@ -3,6 +3,9 @@ import { scopeLabels } from '../src/services/scopeService';
 import { findApplicationById } from '../src/repositories/applicationRepository';
 import { generateAccessToken } from '../src/services/tokenServie';
 import { Application } from 'express';
+import { AccessToken } from '../src/entities/accessToken';
+import { findActiveTokenByValue } from '../src/repositories/accessTokenRepository';
+import { AdminRole } from "../src/entities/admin";
 
 // eslint:disable-next-line
 export const serverUrl = 'http://localhost:3041';
@@ -88,12 +91,20 @@ export const SEED_DATA = {
     scopes: [scopeLabels.CREATE_DONATION],
     isActive: true,
   },
+  FIRST_ADMIN :{
+    id: 1,
+    firstName:'first-admin-firstName',
+    lastName:'first-admin-lastName',
+    password:'12345',
+    role:AdminRole.SUPER_ADMIN,
+    email: 'test-admin@giveth.io',
+  }
 };
 
 export const createAccessTokenForTest = async (params: {
   scopes: string[];
   applicationId: number;
-}): Promise<string> => {
+}): Promise<AccessToken> => {
   const application = await findApplicationById(params.applicationId);
   if (!application) {
     throw new Error('Application not found');
@@ -102,5 +113,8 @@ export const createAccessTokenForTest = async (params: {
     application,
     scopes: params.scopes,
   });
-  return accessToken;
+  const fetchedAccessToken = (await findActiveTokenByValue(
+    accessToken,
+  )) as AccessToken;
+  return fetchedAccessToken;
 };

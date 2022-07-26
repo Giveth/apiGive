@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { decodeBasicAuthentication } from '../utils/authorizationUtils';
-import { findApplicationByBasicAuthData } from '../services/applicationService';
 import { findActiveTokenByValue } from '../repositories/accessTokenRepository';
 import {
   findApplicationById,
@@ -8,6 +7,7 @@ import {
 } from '../repositories/applicationRepository';
 import { StandardError } from '../types/StandardError';
 import { errorMessagesEnum } from '../utils/errorMessages';
+import { updateAccessTokenAndApplication } from '../repositories/logRepository';
 
 export const authenticateThirdPartyBasicAuth = async (
   req: Request,
@@ -23,6 +23,13 @@ export const authenticateThirdPartyBasicAuth = async (
     const application = await findApplicationByLabelAndSecret({
       label: username,
       secret,
+    });
+    if (!application) {
+      throw new StandardError(errorMessagesEnum.UNAUTHORIZED);
+    }
+    updateAccessTokenAndApplication({
+      application,
+      trackId: res.locals.trackId,
     });
     res.locals.application = application;
     next();
@@ -46,7 +53,15 @@ export const authenticateJwtAccessToken = async (
     throw new StandardError(errorMessagesEnum.UNAUTHORIZED);
   }
   const application = await findApplicationById(accessToken.applicationId);
+  if (!application) {
+    throw new StandardError(errorMessagesEnum.UNAUTHORIZED);
+  }
   res.locals.accessToken = accessToken;
   res.locals.application = application;
+  updateAccessTokenAndApplication({
+    accessToken,
+    application,
+    trackId: res.locals.trackId,
+  });
   next();
 };
